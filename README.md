@@ -15,4 +15,8 @@
     <td>Kelas</td>
     <td>TI.22.A1</td>
   </tr>
+  <tr>
+    <td>Dosen</td>
+    <td>Donny Maulana, S.Kom., M.M.S.I.</td>
+  </tr>
 </table>
