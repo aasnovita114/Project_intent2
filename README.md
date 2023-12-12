@@ -1158,4 +1158,135 @@ public class Two2Activity extends AppCompatActivity {
 }
 ```
 
+## E.Code Project SetAlarm dan Maps
+* Set Alarm
+```
+<androidx.cardview.widget.CardView
+                android:id="@+id/cdMenu4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="7dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/alarm" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:onClick="setAlarm"
+                        android:text="SET ALARM"
+                        android:textAlignment="center"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+```
+* Maps
+```
+<androidx.cardview.widget.CardView
+                android:id="@+id/cdMenu6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="7dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/maps" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:text="MAPS"
+                        android:textAlignment="center"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+```
+Lalu tambahkan code Implicit Intent pada MenuActivity.java :
+* SetAlarm
+```
+findViewById(R.id.cdMenu4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setAlarm();
+            }
+        });
+private void setAlarm() {
+        Intent alarmIntent = new Intent(android.provider.AlarmClock.ACTION_SET_ALARM);
+        // Add extra details for the alarm, e.g., alarm time, label, etc.
+        // alarmIntent.putExtra(...
+        startActivity(alarmIntent);
+    }
+```
+* Maps
+```
+findViewById(R.id.cdMenu6).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Example location: Jakarta, Indonesia
+                Uri geoLocation = Uri.parse("geo:-6.2088,106.8456");
+                openMaps(geoLocation);
+            }
+        });
+private void openMaps(Uri geoLocation) {
+        Intent maps = new Intent(Intent.ACTION_VIEW);
+        maps.setData(geoLocation);
+        if (maps.resolveActivity(getPackageManager()) != null) {
+            startActivity(maps);
+        }
+    }
+```
+Selanjutnya buka AndroidManifest.xml dan tambahkan code untuk izin membuka Alarm :
+```
+<uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+```
+Tambahkan code berikut pada bagian application agar set alarm dapat berjalan :
+```
+<activity
+            android:name=".MenuActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SET_ALARM" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="geo" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+```
+## Hasil Run
+
+
+
+https://github.com/aasnovita114/Project_intent2/assets/116045324/0c2de126-e88b-464e-989c-0d7b455072a5
+
 
